@@ -38,26 +38,6 @@
                                  referencedTableName="events"
                                  constraintName="fk_user_registrations_events"
                                  onDelete="CASCADE"/>
-
-        <sql>ALTER TABLE user_registrations ENABLE ROW LEVEL SECURITY;</sql>
-
-        <sql>
-            CREATE POLICY "User can read own registrations"
-            ON user_registrations FOR SELECT
-            USING (auth.uid() = auth_uid);
-        </sql>
-
-        <sql>
-            CREATE POLICY "User can insert own registration"
-            ON user_registrations FOR INSERT
-            WITH CHECK (auth.uid() = auth_uid);
-        </sql>
-
-        <sql>
-            CREATE POLICY "User can delete own registration"
-            ON user_registrations FOR DELETE
-            USING (auth.uid() = auth_uid);
-        </sql>
     </changeSet>
 
 </databaseChangeLog>

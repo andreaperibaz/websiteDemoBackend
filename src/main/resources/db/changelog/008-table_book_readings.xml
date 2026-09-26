@@ -21,18 +21,6 @@
                                  referencedTableName="events"
                                  constraintName="fk_book_readings_events"
                                  onDelete="CASCADE"/>
-
-        <sql>ALTER TABLE book_readings ENABLE ROW LEVEL SECURITY;</sql>
-        <sql>
-            CREATE POLICY "Public read book readings"
-            ON book_readings FOR SELECT USING (true);
-        </sql>
-        <sql>
-            CREATE POLICY "Service role manage book readings"
-            ON book_readings FOR ALL
-            USING (auth.role() = 'service_role')
-            WITH CHECK (auth.role() = 'service_role');
-        </sql>
     </changeSet>
 
     </databaseChangeLog>

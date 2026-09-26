@@ -58,29 +58,6 @@
                                  referencedTableName="profiles"
                                  constraintName="fk_events_profiles"
                                  onDelete="SET NULL"/>
-
-        <sql>ALTER TABLE events ENABLE ROW LEVEL SECURITY;</sql>
-
-        <sql>
-            CREATE POLICY "Public read events"
-            ON events FOR SELECT USING (true);
-        </sql>
-        <sql>
-            CREATE POLICY "Service role insert events"
-            ON events FOR INSERT
-            WITH CHECK (auth.role() = 'service_role');
-        </sql>
-        <sql>
-            CREATE POLICY "Service role update events"
-            ON events FOR UPDATE
-            USING (auth.role() = 'service_role')
-            WITH CHECK (auth.role() = 'service_role');
-        </sql>
-        <sql>
-            CREATE POLICY "Service role delete events"
-            ON events FOR DELETE
-            USING (auth.role() = 'service_role');
-        </sql>
     </changeSet>
 
 </databaseChangeLog>

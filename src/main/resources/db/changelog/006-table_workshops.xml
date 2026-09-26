@@ -23,17 +23,5 @@
                                  referencedTableName="events"
                                  constraintName="fk_workshops_events"
                                  onDelete="CASCADE"/>
-
-        <sql>ALTER TABLE workshops ENABLE ROW LEVEL SECURITY;</sql>
-        <sql>
-            CREATE POLICY "Public read workshops"
-            ON workshops FOR SELECT USING (true);
-        </sql>
-        <sql>
-            CREATE POLICY "Service role manage workshops"
-            ON workshops FOR ALL
-            USING (auth.role() = 'service_role')
-            WITH CHECK (auth.role() = 'service_role');
-        </sql>
     </changeSet>
 </databaseChangeLog>
