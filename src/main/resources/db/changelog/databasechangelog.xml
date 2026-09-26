@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+    <include file="db/changelog/extensions.xml" />
+    <include file="db/changelog/001-table_category.xml" />
+    <include file="db/changelog/002-table_coffee.xml" />
+    <include file="db/changelog/003-table_event_types.xml" />
+    <include file="db/changelog/004-table_profiles.xml" />
+    <include file="db/changelog/005-table_events.xml" />
+    <include file="db/changelog/006-table_workshops.xml" />
+    <include file="db/changelog/007-table_book_club.xml" />
+    <include file="db/changelog/008-table_book_readings.xml" />
+    <include file="db/changelog/010-table_users.xml" />
+    <include file="db/changelog/009-table_user_registrations.xml" />
+    <include file="db/changelog/011-table_books.xml" />
+    <include file="db/changelog/012-add_categories.xml" />
+    <include file="db/changelog/013-add_coffee.xml" />
+    <include file="db/changelog/014-add_event_types.xml" />
+    <include file="db/changelog/015-add_events.xml" />
+    <include file="db/changelog/016-add_workshops.xml" />
+    <include file="db/changelog/017-add_book_clubs.xml" />
+    <include file="db/changelog/018-add_book_readings.xml" />
+    <include file="db/changelog/019-add_books.xml" />
+    <include file="db/changelog/020-table_contact_form.xml" />
+    <include file="db/changelog/triggers.xml" />
+
+    <changeSet id="0" author="andreapeib">
+    <sql>ALTER TABLE databasechangelog ENABLE ROW LEVEL SECURITY;</sql>
+    <sql>ALTER TABLE databasechangeloglock ENABLE ROW LEVEL SECURITY;</sql>
+    </changeSet>
+
+</databaseChangeLog>

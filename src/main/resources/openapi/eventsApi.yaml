@@ -1,0 +1,373 @@
+openapi: 3.0.3
+info:
+  title: Events API
+  version: 1.0.0
+  description: API to manage events (workshops, book clubs, and book readings).
+servers:
+  - url: http://localhost:8080/demo
+    description: Local server
+
+paths:
+  /events/workshops:
+    get:
+      summary: Get all workshops.
+      operationId: getWorkshops
+      responses:
+        "200":
+          description: List of workshops (wrapped).
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/WorkshopListWrapper"
+
+  /events/workshops/search:
+    get:
+      summary: Search workshops by name.
+      operationId: searchWorkshops
+      description: >
+        Returns the list of workshops that match
+        an exact name, or contain the word in the name.
+      parameters:
+        - in: query
+          name: query
+          required: true
+          schema:
+            type: string
+          description: name to search.
+      responses:
+        '200':
+          description: List of workshops found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkshopListWrapper'
+        '400':
+          description: Invalid search parameter.
+        '404':
+          description: Workshops not found.
+
+  /events/filter:
+    post:
+      summary: Filter events by criteria.
+      operationId: filterEvents
+      description: Returns events that meet the filtering criteria.
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EventFilterDto'
+      responses:
+        '200':
+          description: List of filtered events.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventListWrapper'
+
+  /events/book-clubs:
+    get:
+      summary: Get all book clubs.
+      operationId: getBookClubs
+      responses:
+        "200":
+          description: List of book clubs (wrapped).
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BookClubListWrapper"
+
+  /events/book-readings:
+    get:
+      summary: Get all public book readings.
+      operationId: getBookReadings
+      responses:
+        "200":
+          description: List of public book readings (wrapped).
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BookReadingListWrapper"
+
+  /events:
+    get:
+      summary: Get all events.
+      operationId: getAllEvents
+      tags:
+        - Events
+      responses:
+        "200":
+          description: Successfully retrieved list of events.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EventListWrapper"
+    post:
+      summary: Create a new event.
+      operationId: createEvent
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EventDto"
+      responses:
+        "201":
+          description: Event created (wrapped).
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EventBaseWrapper"
+
+  /registrations:
+    post:
+      summary: Register a user (registered or guest) to an event.
+      operationId: createRegistration
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RegistrationDto"
+      responses:
+        "201":
+          description: Registration created (wrapped).
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RegistrationWrapper"
+
+components:
+  schemas:
+    EventDto:
+      type: object
+      properties:
+        id: 
+          type: integer
+          format: int64
+          example: 1
+        eventCode:
+          type: string
+          example: "WS-2025-1"
+        eventType:
+          type: string
+          enum: [workshop, book_club, book_reading]
+          example: "workshop"
+        name:
+          type: string
+          example: "Creative Writing Workshop"
+        description:
+          type: string
+          example: "Learn creative writing techniques from experts."
+        registrationStartDate:
+          type: string
+          format: date-time
+        registrationEndDate:
+          type: string
+          format: date-time
+        startDate:
+          type: string
+          format: date-time
+        endDate:
+          type: string
+          format: date-time
+        maxParticipants:
+          type: integer
+        availableSpots:
+          type: integer
+        requirements:
+          type: array
+          items:
+            type: string
+        requiresPayment:
+          type: boolean
+        price:
+          type: number
+          format: float
+      required:
+        - id
+        - eventCode
+        - eventType
+        - name
+        - description
+        - registrationStartDate
+        - registrationEndDate
+        - startDate
+        - endDate
+        - maxParticipants
+        - availableSpots
+        - requiresPayment
+
+    EventFilterDto:
+      type: object
+      description: Filtering criteria applicable to any type of event.
+      properties:
+        eventTypes:
+          type: array
+          items:
+            type: string
+          description: >
+            List of event types to filter.  
+            Examples: ["workshop", "book_club", "book_reading"]
+        startDate:
+          type: string
+          format: date-time
+          description: Minimum event start date.
+        endDate:
+          type: string
+          format: date-time
+          description: Maximum event end date.
+        minPrice:
+          type: number
+          format: double
+          description: Minimum price.
+        maxPrice:
+          type: number
+          format: double
+          description: Maximum price.
+        requiresPayment:
+          type: boolean
+          description: >
+            - true → only paid events  
+            - false → only free events  
+            - null → no filter
+        query:
+          type: string
+          description: Free text to search in event name or description.
+      example:
+        eventTypes: ["workshop", "book_club"]
+        startDate: "2025-09-01T00:00:00Z"
+        endDate: "2025-09-30T23:59:59Z"
+        minPrice: 10
+        maxPrice: 100
+        requiresPayment: true
+        query: "literature"
+
+    WorkshopDto:
+      allOf:
+        - $ref: "#/components/schemas/EventDto"
+        - type: object
+          properties:
+            materials:
+              type: string
+              example: "Laptop, notebook, pen"
+
+    BookClubDto:
+      allOf:
+        - $ref: "#/components/schemas/EventDto"
+        - type: object
+          properties:
+            selectedBook:
+              type: string
+              example: "One Hundred Years of Solitude"
+
+    BookReadingDto:
+      allOf:
+        - $ref: "#/components/schemas/EventDto"
+        - type: object
+          properties:
+            guestAuthor:
+              type: string
+              example: "Isabel Allende"
+
+    ParticipantDto:
+      type: object
+      properties:
+        id: 
+          type: integer
+          format: int64
+          example: 1
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+        address:
+          type: string
+        phone:
+          type: string
+        isGuest:
+          type: boolean
+      required:
+        - id
+        - firstName
+        - lastName
+        - email
+        - isGuest
+
+    RegistrationDto:
+      type: object
+      properties:
+        id: 
+          type: integer
+          format: int64
+          example: 1
+        eventId:
+          type: integer
+        userId:
+          type: integer
+        registrationDate:
+          type: string
+          format: date-time
+      required:
+        - id
+        - eventId
+        - userId
+        - registrationDate
+
+    WorkshopListWrapper:
+      type: object
+      properties:
+        code:
+          type: integer
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/WorkshopDto"
+
+    BookClubListWrapper:
+      type: object
+      properties:
+        code:
+          type: integer
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/BookClubDto"
+
+    BookReadingListWrapper:
+      type: object
+      properties:
+        code:
+          type: integer
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/BookReadingDto"
+
+    EventListWrapper:
+      type: object
+      properties:
+        code:
+          type: integer
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/EventDto"
+
+    EventBaseWrapper:
+      type: object
+      properties:
+        code:
+          type: integer
+        data:
+          $ref: "#/components/schemas/EventDto"
+
+    RegistrationWrapper:
+      type: object
+      properties:
+        code:
+          type: integer
+        data:
+          $ref: "#/components/schemas/RegistrationDto"

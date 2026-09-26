@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+    <changeSet id="005-1" author="andreapeib">
+        <createTable tableName="events">
+            <column name="id" type="bigserial">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="event_type_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="event_code" type="varchar(20)">
+                <constraints nullable="false" unique="true" uniqueConstraintName="uq_events_event_code"/>
+            </column>
+            <column name="name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="text">
+                <constraints nullable="false"/>
+            </column>
+            <column name="registration_start" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="registration_end" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="start_date" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="end_date" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="max_participants" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="requirements" type="jsonb"/>
+            <column name="requires_payment" type="boolean" defaultValueBoolean="false"/>
+            <column name="price" type="numeric(10,2)" defaultValueNumeric="0.00"/>
+            <column name="creator_id" type="uuid"/>
+            <column name="created_at" type="timestamp" defaultValueComputed="NOW()"/>
+            <column name="updated_at" type="timestamp" defaultValueComputed="NOW()"/>
+        </createTable>
+
+        <addForeignKeyConstraint baseColumnNames="event_type_id"
+                                 baseTableName="events"
+                                 referencedColumnNames="id"
+                                 referencedTableName="event_types"
+                                 constraintName="fk_events_event_types"
+                                 onDelete="RESTRICT"/>
+
+        <addForeignKeyConstraint baseColumnNames="creator_id"
+                                 baseTableName="events"
+                                 referencedColumnNames="id"
+                                 referencedTableName="profiles"
+                                 constraintName="fk_events_profiles"
+                                 onDelete="SET NULL"/>
+
+        <sql>ALTER TABLE events ENABLE ROW LEVEL SECURITY;</sql>
+
+        <sql>
+            CREATE POLICY "Public read events"
+            ON events FOR SELECT USING (true);
+        </sql>
+        <sql>
+            CREATE POLICY "Service role insert events"
+            ON events FOR INSERT
+            WITH CHECK (auth.role() = 'service_role');
+        </sql>
+        <sql>
+            CREATE POLICY "Service role update events"
+            ON events FOR UPDATE
+            USING (auth.role() = 'service_role')
+            WITH CHECK (auth.role() = 'service_role');
+        </sql>
+        <sql>
+            CREATE POLICY "Service role delete events"
+            ON events FOR DELETE
+            USING (auth.role() = 'service_role');
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>

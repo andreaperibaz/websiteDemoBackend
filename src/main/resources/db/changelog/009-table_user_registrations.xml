@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+    <changeSet id="009-1" author="andreapeib">
+        <createTable tableName="user_registrations">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="user_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="auth_uid" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="event_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="registration_date" type="TIMESTAMP"/>
+        </createTable>
+
+        <addUniqueConstraint columnNames="user_id,event_id"
+                             tableName="user_registrations"
+                             constraintName="uq_user_registrations_user_event"/>
+
+        <addForeignKeyConstraint baseTableName="user_registrations"
+                                 baseColumnNames="user_id"
+                                 referencedTableName="users"
+                                 referencedColumnNames="id"
+                                 constraintName="fk_userregistrations_users"/>
+
+        <addForeignKeyConstraint baseColumnNames="event_id"
+                                 baseTableName="user_registrations"
+                                 referencedColumnNames="id"
+                                 referencedTableName="events"
+                                 constraintName="fk_user_registrations_events"
+                                 onDelete="CASCADE"/>
+
+        <sql>ALTER TABLE user_registrations ENABLE ROW LEVEL SECURITY;</sql>
+
+        <sql>
+            CREATE POLICY "User can read own registrations"
+            ON user_registrations FOR SELECT
+            USING (auth.uid() = auth_uid);
+        </sql>
+
+        <sql>
+            CREATE POLICY "User can insert own registration"
+            ON user_registrations FOR INSERT
+            WITH CHECK (auth.uid() = auth_uid);
+        </sql>
+
+        <sql>
+            CREATE POLICY "User can delete own registration"
+            ON user_registrations FOR DELETE
+            USING (auth.uid() = auth_uid);
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,29 @@
+### 
+
+GET http://localhost:8080/events/workshops
+Accept: application/json
+
+### 
+GET http://localhost:8080/events
+Accept: application/json
+
+### 
+POST http://localhost:8080/events/filter
+Accept: application/json
+Content-Type: application/json
+
+{
+  "eventTypes": ["workshop"],
+  "minPrice": 10.0,
+  "maxPrice": 20.0
+  
+}
+
+###
+@variable = rea
+
+
+### 
+GET http://localhost:8080/events/workshops/search?query={{variable}}
+Accept: application/json
+

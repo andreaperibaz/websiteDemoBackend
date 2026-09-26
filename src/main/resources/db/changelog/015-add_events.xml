@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.23.xsd">
+
+    <changeSet id="015-1" author="andreapeib">
+
+   <insert tableName="events">
+        <column name="event_type_id" valueComputed="(SELECT id FROM event_types WHERE code='workshop')"/>
+        <column name="event_code" value="WS-LIT-2025-1"/>
+        <column name="name" value="Creative Writing Workshop"/>
+        <column name="description" value="Practical exercises to develop imagination and narrative style"/>
+        <column name="registration_start" valueDate="2025-09-01 09:00:00"/>
+        <column name="registration_end" valueDate="2025-09-07 23:59:59"/>
+        <column name="start_date" valueDate="2025-09-10 17:00:00"/>
+        <column name="end_date" valueDate="2025-09-10 20:00:00"/>
+        <column name="max_participants" valueNumeric="25"/>
+        <column name="requirements" valueComputed="'[&quot;Notebook&quot;,&quot;Pen&quot;]'::jsonb"/>
+        <column name="requires_payment" valueBoolean="false"/>
+        <column name="price" valueNumeric="0.00"/>
+    </insert>
+
+    <insert tableName="events">
+        <column name="event_type_id" valueComputed="(SELECT id FROM event_types WHERE code='workshop')"/>
+        <column name="event_code" value="WS-LIT-2025-2"/>
+        <column name="name" value="Contemporary Poetry Workshop"/>
+        <column name="description" value="Analysis and creation of contemporary poems"/>
+        <column name="registration_start" valueDate="2025-09-15 09:00:00"/>
+        <column name="registration_end" valueDate="2025-09-20 23:59:59"/>
+        <column name="start_date" valueDate="2025-09-25 18:00:00"/>
+        <column name="end_date" valueDate="2025-09-25 21:00:00"/>
+        <column name="max_participants" valueNumeric="20"/>
+        <column name="requirements" valueComputed="NULL"/>
+        <column name="requires_payment" valueBoolean="true"/>
+        <column name="price" valueNumeric="15.00"/>
+    </insert>
+
+        <insert tableName="events">
+            <column name="event_type_id" valueComputed="(SELECT id FROM event_types WHERE code='book_club')"/>
+            <column name="event_code" value="BC-LIT-2025-1"/>
+            <column name="name" value="Borges Reading Club"/>
+            <column name="description" value="Discussion about short stories by Jorge Luis Borges"/>
+            <column name="registration_start" valueDate="2025-09-01 09:00:00"/>
+            <column name="registration_end" valueDate="2025-09-07 23:59:59"/>
+            <column name="start_date" valueDate="2025-09-12 19:00:00"/>
+            <column name="end_date" valueDate="2025-09-12 21:00:00"/>
+            <column name="max_participants" valueNumeric="15"/>
+            <column name="requirements" valueComputed="NULL"/>
+            <column name="requires_payment" valueBoolean="false"/>
+            <column name="price" valueNumeric="0.00"/>
+        </insert>
+
+        <insert tableName="events">
+            <column name="event_type_id" valueComputed="(SELECT id FROM event_types WHERE code='book_reading')"/>
+            <column name="event_code" value="BR-LIT-2025-1"/>
+            <column name="name" value="Mario Vargas Llosa Reading"/>
+            <column name="description" value="Reading fragments from 'The Time of the Hero'"/>
+            <column name="registration_start" valueDate="2025-11-01 09:00:00"/>
+            <column name="registration_end" valueDate="2025-11-10 23:59:59"/>
+            <column name="start_date" valueDate="2025-11-15 19:00:00"/>
+            <column name="end_date" valueDate="2025-11-15 21:00:00"/>
+            <column name="max_participants" valueNumeric="80"/>
+            <column name="requirements" valueComputed="NULL"/>
+            <column name="requires_payment" valueBoolean="false"/>
+            <column name="price" valueNumeric="0.00"/>
+        </insert>
+
+    </changeSet>
+</databaseChangeLog>

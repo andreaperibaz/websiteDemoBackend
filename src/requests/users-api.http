@@ -1,0 +1,11 @@
+### 
+POST http://localhost:8080/users/contactForm
+Accept: application/json
+Content-Type: application/json
+
+{
+  "name": "EjemploBackend",
+  "email": "ejemploBackend@example.com",
+  "message": "I would like more information about the book club, please.",
+  "mailingList": true
+}

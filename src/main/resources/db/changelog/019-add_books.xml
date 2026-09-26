@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+    <changeSet id="019-1" author="andreapeib">
+        <insert tableName="books">
+            <column name="title" value="Norwegian Wood"/>
+            <column name="author" value="Haruki Murakami"/>
+        </insert>
+        <insert tableName="books">
+            <column name="title" value="Kafka on the Shore"/>
+            <column name="author" value="Haruki Murakami"/>
+        </insert>
+        <insert tableName="books">
+            <column name="title" value="1Q84"/>
+            <column name="author" value="Haruki Murakami"/>
+        </insert>
+
+        <insert tableName="books">
+            <column name="title" value="One Piece Vol. 1: Romance Dawn"/>
+            <column name="author" value="Eiichiro Oda"/>
+        </insert>
+        <insert tableName="books">
+            <column name="title" value="One Piece Vol. 2: Buggy the Clown"/>
+            <column name="author" value="Eiichiro Oda"/>
+        </insert>
+
+        <insert tableName="books">
+            <column name="title" value="Legends &amp; Lattes"/>
+            <column name="author" value="Travis Baldree"/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>

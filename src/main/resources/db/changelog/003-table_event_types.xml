@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">    
+
+      <changeSet id="003-1" author="andreapeib">
+        <createTable tableName="event_types">
+            <column name="id" type="bigserial">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="code" type="varchar(50)">
+                <constraints nullable="false" unique="true" uniqueConstraintName="uq_event_types_code"/>
+            </column>
+            <column name="name" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="text"/>
+            <column name="created_at" type="timestamp" defaultValueComputed="NOW()"/>
+            <column name="updated_at" type="timestamp" defaultValueComputed="NOW()"/>
+        </createTable>
+
+        <sql>ALTER TABLE event_types ENABLE ROW LEVEL SECURITY;</sql>
+        <sql>
+            CREATE POLICY "Public read event types"
+            ON event_types FOR SELECT USING (true);
+        </sql>
+        <sql>
+            INSERT INTO event_types (code, name, description) VALUES
+            ('workshop', 'Workshop', 'Interactive learning workshops.'),
+            ('book_club', 'Book Club', 'Meetings to discuss books.'),
+            ('book_reading', 'Book Reading', 'Public book readings.')
+            ON CONFLICT (code) DO NOTHING;
+        </sql>
+    </changeSet>
+
+    </databaseChangeLog>

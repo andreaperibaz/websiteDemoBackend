@@ -1,0 +1,110 @@
+openapi: 3.0.3
+info:
+  title: Menu API
+  version: 1.0.0
+  description: API for managing coffee menu.
+servers:
+  - url: http://localhost:8080/demo
+    description: Local server
+paths:
+  /menu/coffee:
+    get:
+      summary: Get all coffees.
+      operationId: getCoffees
+      responses:
+        '200':
+          description: List of coffees.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CoffeeListWrapper'
+  /menu/categories:
+    get:
+      summary: Get all categories with their coffees.
+      operationId: getCategoriesWithCoffees
+      responses:
+        '200':
+          description: List of categories with coffees.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CategoryWithCoffeesWrapper'
+components:
+  schemas:
+    CoffeeDto:
+      type: object
+      properties:
+        id: 
+          type: integer
+          format: int64
+          example: 1
+        category:
+          type: string
+          example: "Filtered Coffees"
+        name:
+          type: string
+          example: "Pour Over"
+        description:
+          type: string
+          example: "Hand-filtered coffee using a paper filter. Slow and precise extraction highlights delicate flavors and a very clean aromatic profile."
+        price:
+          type: number
+          format: double
+          description: Price in euros.
+          example: 15
+      required:
+        - category
+        - name
+        - description
+        - price
+
+    CoffeeListWrapper:
+      type: object
+      properties:
+        code:
+          type: integer
+          example: 200
+          description: HTTP response code.
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/CoffeeDto'
+          description: List of coffees.
+      required:
+        - code
+        - data
+    CategoryWithCoffeesDto:
+      type: object
+      properties:
+        id: 
+          type: integer
+          format: int64
+          example: 1
+        name:
+          type: string
+          example: "Filtered Coffees"
+        coffees:
+          type: array
+          items:
+            $ref: '#/components/schemas/CoffeeDto'
+      required:
+        - id
+        - name
+        - coffees
+
+    CategoryWithCoffeesWrapper:
+      type: object
+      properties:
+        code:
+          type: integer
+          example: 200
+          description: HTTP response code.
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/CategoryWithCoffeesDto'
+          description: List of categories with coffees.
+      required:
+        - code
+        - data
+

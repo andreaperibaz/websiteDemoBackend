@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.23.xsd">
+
+   
+    <changeSet id="013-1" author="andreapeib">
+        <insert tableName="coffee">
+            <column name="category_id" valueComputed="(SELECT id FROM category WHERE name='Filtered Coffees')"/>
+            <column name="name" value="Pour Over"/>
+            <column name="description" value="Hand-filtered coffee using a paper filter. Slow and precise extraction highlights delicate flavors and a very clean aromatic profile. Ideal for those who enjoy light and complex coffees."/>
+            <column name="price" valueNumeric="3"/>
+        </insert>
+        <insert tableName="coffee">
+            <column name="category_id" valueComputed="(SELECT id FROM category WHERE name='Filtered Coffees')"/>
+            <column name="name" value="French Press"/>
+            <column name="description" value="Immersion method that produces a coffee with body and rich texture. Natural oils are preserved, delivering intense aromas and a robust flavor with a slight silky mouthfeel."/>
+            <column name="price" valueNumeric="3"/>
+        </insert>
+        <insert tableName="coffee">
+            <column name="category_id" valueComputed="(SELECT id FROM category WHERE name='Filtered Coffees')"/>
+            <column name="name" value="Cold Brew"/>
+            <column name="description" value="Coffee infused cold for 12 to 24 hours, resulting in a smooth, low-acidity, and refreshing drink. Perfect for hot days or for those who prefer less bitter coffee."/>
+            <column name="price" valueNumeric="3"/>
+        </insert>
+
+        <insert tableName="coffee">
+            <column name="category_id" valueComputed="(SELECT id FROM category WHERE name='Espresso')"/>
+            <column name="name" value="Ristretto"/>
+            <column name="description" value="Concentrated version of traditional espresso, using less water to extract a shorter shot with a more intense, sweet, and full-bodied flavor."/>
+            <column name="price" valueNumeric="4"/>
+        </insert>
+        <insert tableName="coffee">
+            <column name="category_id" valueComputed="(SELECT id FROM category WHERE name='Espresso')"/>
+            <column name="name" value="Double Espresso"/>
+            <column name="description" value="Double dose of ground coffee and water, ideal for those needing an extra caffeine boost with all the flavor of concentrated espresso."/>
+            <column name="price" valueNumeric="4"/>
+        </insert>
+        <insert tableName="coffee">
+            <column name="category_id" valueComputed="(SELECT id FROM category WHERE name='Espresso')"/>
+            <column name="name" value="Macchiato"/>
+            <column name="description" value="Espresso 'stained' with a small amount of milk foam, combining coffee intensity with milky softness without losing strength."/>
+            <column name="price" valueNumeric="4"/>
+        </insert>
+
+        <insert tableName="coffee">
+            <column name="category_id" valueComputed="(SELECT id FROM category WHERE name='Milk Coffees')"/>
+            <column name="name" value="Latte"/>
+            <column name="description" value="Espresso mixed with steamed milk and a light layer of foam. Smooth and creamy, it is one of the most popular coffees for those who enjoy a balanced coffee and milk flavor."/>
+            <column name="price" valueNumeric="3"/>
+        </insert>
+        <insert tableName="coffee">
+            <column name="category_id" valueComputed="(SELECT id FROM category WHERE name='Milk Coffees')"/>
+            <column name="name" value="Cappuccino"/>
+            <column name="description" value="Made of equal parts espresso, steamed milk, and thick foam. Its texture is airy, with an intense and creamy flavor that delights at any time of day."/>
+            <column name="price" valueNumeric="3"/>
+        </insert>
+        <insert tableName="coffee">
+            <column name="category_id" valueComputed="(SELECT id FROM category WHERE name='Milk Coffees')"/>
+            <column name="name" value="Flat White"/>
+            <column name="description" value="Similar to latte but with less foam and a silkier texture. Characterized by a more concentrated flavor and a thin, velvety layer of microfoam."/>
+            <column name="price" valueNumeric="3"/>
+        </insert>
+
+        <insert tableName="coffee">
+            <column name="category_id" valueComputed="(SELECT id FROM category WHERE name='Specialties')"/>
+            <column name="name" value="Mocha"/>
+            <column name="description" value="A delicious blend of espresso, hot chocolate, and steamed milk. Ideal for chocolate lovers seeking a sweet and creamy coffee."/>
+            <column name="price" valueNumeric="4"/>
+        </insert>
+        <insert tableName="coffee">
+            <column name="category_id" valueComputed="(SELECT id FROM category WHERE name='Specialties')"/>
+            <column name="name" value="Affogato"/>
+            <column name="description" value="Refreshing dessert consisting of a scoop of vanilla ice cream 'drowned' with a hot espresso shot. Combines sweet with bitter exquisitely."/>
+            <column name="price" valueNumeric="5"/>
+        </insert>
+        <insert tableName="coffee">
+            <column name="category_id" valueComputed="(SELECT id FROM category WHERE name='Specialties')"/>
+            <column name="name" value="Irish Coffee"/>
+            <column name="description" value="Traditional drink mixing hot coffee, Irish whiskey, sugar, and a layer of whipped cream. A warm and comforting experience with an alcoholic touch."/>
+            <column name="price" valueNumeric="5"/>
+        </insert>
+
+        <insert tableName="coffee">
+            <column name="category_id" valueComputed="(SELECT id FROM category WHERE name='Coffees of the World')"/>
+            <column name="name" value="Turkish"/>
+            <column name="description" value="Ancient preparation where very finely ground coffee is boiled with water and spices like cardamom. Strong flavor, thick texture, and a method full of tradition."/>
+            <column name="price" valueNumeric="3"/>
+        </insert>
+        <insert tableName="coffee">
+            <column name="category_id" valueComputed="(SELECT id FROM category WHERE name='Coffees of the World')"/>
+            <column name="name" value="Vietnamese"/>
+            <column name="description" value="Slowly filtered coffee, served with condensed milk and ice. Sweet, strong, and refreshing, a classic in the streets of Vietnam."/>
+            <column name="price" valueNumeric="3"/>
+        </insert>
+        <insert tableName="coffee">
+            <column name="category_id" valueComputed="(SELECT id FROM category WHERE name='Coffees of the World')"/>
+            <column name="name" value="Cuban Espresso"/>
+            <column name="description" value="Espresso with sugar added during extraction, creating a sweet and creamy layer called 'crema'. Intense and very sweet, ideal for demanding palates."/>
+            <column name="price" valueNumeric="3"/>
+        </insert>
+        <insert tableName="coffee">
+            <column name="category_id" valueComputed="(SELECT id FROM category WHERE name='Coffees of the World')"/>
+            <column name="name" value="Japanese Iced Coffee"/>
+            <column name="description" value="Method of preparing cold coffee by pouring hot water directly over ice, preserving the aromas and freshness of the coffee in a refreshing drink."/>
+            <column name="price" valueNumeric="3"/>
+        </insert>
+        <insert tableName="coffee">
+            <column name="category_id" valueComputed="(SELECT id FROM category WHERE name='Coffees of the World')"/>
+            <column name="name" value="Café de Olla"/>
+            <column name="description" value="Traditional Mexican coffee made with coffee, cinnamon, and piloncillo cooked together to create a sweet, aromatic, and comforting drink, perfect for breakfast."/>
+            <column name="price" valueNumeric="3"/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>

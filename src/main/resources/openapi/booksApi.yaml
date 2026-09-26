@@ -1,0 +1,55 @@
+openapi: 3.0.3
+info:
+  title: Books API
+  version: 1.0.0
+  description: API for managing books.
+servers:
+  - url: http://localhost:8080/demo
+    description: Local server
+paths:
+  /books:
+    get:
+      summary: Get all books.
+      operationId: getBooks
+      responses:
+        '200':
+          description: List of books.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BookListWrapper'
+components:
+  schemas:
+    BookDto:
+      type: object
+      properties:
+        id: 
+          type: integer
+          format: int64
+          example: 1
+        title:
+          type: string
+          example: "Don Quixote"
+        author:
+          type: string
+          example: "Cervantes"
+      required:
+        - id
+        - title
+        - author
+
+    BookListWrapper:
+      type: object
+      properties:
+        code:
+          type: integer
+          example: 200
+          description: HTTP response code.
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/BookDto'
+          description: List of books.
+      required:
+        - code
+        - data

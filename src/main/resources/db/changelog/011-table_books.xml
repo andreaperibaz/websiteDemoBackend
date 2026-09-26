@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+         
+         <changeSet id="011-1" author="andreapeib">
+        <createTable tableName="books">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="title" type="VARCHAR(255)"/>
+            <column name="author" type="VARCHAR(255)"/>
+        </createTable>
+
+        <sql>ALTER TABLE books ENABLE ROW LEVEL SECURITY;</sql>
+
+        <sql>
+            CREATE POLICY "Public read books"
+            ON books FOR SELECT USING (true);
+        </sql>
+
+        <sql>
+            CREATE POLICY "Service role manage books"
+            ON books FOR ALL
+            USING (auth.role() = 'service_role')
+            WITH CHECK (auth.role() = 'service_role');
+        </sql>
+    </changeSet>
+
+        </databaseChangeLog>

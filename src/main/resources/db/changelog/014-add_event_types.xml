@@ -1,0 +1,32 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.23.xsd">
+
+
+    <changeSet id="014-1-workshop" author="andreapeib">
+        <sql>
+            INSERT INTO event_types (code, name, description)
+            VALUES ('workshop', 'Workshop', 'Interactive learning workshops.')
+            ON CONFLICT (code) DO NOTHING;
+        </sql>
+    </changeSet>
+
+    <changeSet id="014-2-seminar" author="andreapeib">
+        <sql>
+            INSERT INTO event_types (code, name, description)
+            VALUES ('seminar', 'Seminar', 'Formal sessions with presentations.')
+            ON CONFLICT (code) DO NOTHING;
+        </sql>
+    </changeSet>
+
+    <changeSet id="014-3-meeting" author="andreapeib">
+        <sql>
+            INSERT INTO event_types (code, name, description)
+            VALUES ('meeting', 'Meeting', 'Informal or formal business meetings.')
+            ON CONFLICT (code) DO NOTHING;
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>

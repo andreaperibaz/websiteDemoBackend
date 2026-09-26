@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+ <changeSet id="007-1" author="andreapeib">
+        <createTable tableName="book_clubs">
+            <column name="event_id" type="bigint">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="selected_book" type="varchar(255)"/>
+            <column name="created_at" type="timestamp" defaultValueComputed="NOW()"/>
+            <column name="updated_at" type="timestamp" defaultValueComputed="NOW()"/>
+        </createTable>
+
+        <addForeignKeyConstraint baseColumnNames="event_id"
+                                 baseTableName="book_clubs"
+                                 referencedColumnNames="id"
+                                 referencedTableName="events"
+                                 constraintName="fk_book_clubs_events"
+                                 onDelete="CASCADE"/>
+
+        <sql>ALTER TABLE book_clubs ENABLE ROW LEVEL SECURITY;</sql>
+        <sql>
+            CREATE POLICY "Public read book clubs"
+            ON book_clubs FOR SELECT USING (true);
+        </sql>
+        <sql>
+            CREATE POLICY "Service role manage book clubs"
+            ON book_clubs FOR ALL
+            USING (auth.role() = 'service_role')
+            WITH CHECK (auth.role() = 'service_role');
+        </sql>
+    </changeSet>
+
+    </databaseChangeLog>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+    <changeSet id="017-1" author="andreapeib">
+        <insert tableName="book_clubs">
+            <column name="event_id" valueComputed="(SELECT id FROM events WHERE event_code='BC-LIT-2025-1')"/>
+            <column name="selected_book" value="Ficciones"/>
+        </insert>
+    </changeSet>
+        </databaseChangeLog>
